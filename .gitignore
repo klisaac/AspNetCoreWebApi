@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/AspNetCoreWeb.Api/bin/Debug/netcoreapp3.1/runtimes
+/AspNetCoreWeb.Api/bin/Debug/netcoreapp3.1
+/AspNetCoreWeb.Api/obj
+*.user
+/AspNetCoreWebApi.Application/bin/Debug/netcoreapp3.1
+/AspNetCoreWebApi.Application/obj
+/AspNetCoreWebApi.Core/bin/Debug/netcoreapp3.1
+/AspNetCoreWebApi.Core/obj
+/AspNetCoreWebApi.Infrastructure/bin/Debug/netcoreapp3.1
+/AspNetCoreWebApi.Infrastructure/obj
+/Tests/AspNetCoreWebApi.Integration.Tests/bin/Debug/netcoreapp3.1
+/Tests/AspNetCoreWebApi.Integration.Tests/obj
+/Tests/AspNetCoreWebApi.UnitTests/bin/Debug/netcoreapp3.1
+/Tests/AspNetCoreWebApi.UnitTests/obj
