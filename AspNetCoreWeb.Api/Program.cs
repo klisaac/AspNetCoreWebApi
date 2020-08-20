@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Web;
-using NLog.Extensions.Logging;
 using AspNetCoreWebApi.Core.Configuration;
 using AspNetCoreWebApi.Core.Logging;
 using AspNetCoreWebApi.Infrastructure.Data;
@@ -51,6 +47,8 @@ namespace AspNetCoreWeb.Api
                     //config.AddCommandLine(args);
                     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    var root = config.Build();
+                    config.AddAzureKeyVault($"https://{root["KeyVault:Vault"]}.vault.azure.net/", root["KeyVault:ClientId"], root["KeyVault:ClientSecret"]);
                 })
                 .ConfigureLogging((context, logging) =>
                 {

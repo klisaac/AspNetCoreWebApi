@@ -25,13 +25,15 @@ namespace AspNetCoreWeb.Api.Extensions
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             // configure strongly typed settings objects
-            var jwtIssuerOptionsSection = configuration.GetSection(nameof(JwtIssuerOptions));
             //var appSettingsSection = _configuration.GetSection("AppSettings").Get<AppSettings>();
+            var jwtIssuerOptionsSection = configuration.GetSection(nameof(JwtIssuerOptions));
+            var jwtSettings = jwtIssuerOptionsSection.Get<JwtIssuerOptions>();
+            //var jwtSettings = new JwtIssuerOptions() {Issuer = configuration[Constants.JwtIssuerSecret], SigningKey = configuration[Constants.JwtSigningKeySecret], Audience = configuration[Constants.JwtAudienceSecret]};
+
             services.Configure<JwtIssuerOptions>(jwtIssuerOptionsSection);
+            //services.Configure<JwtIssuerOptions>(options => { options.Issuer = jwtSettings.Issuer; options.SigningKey = jwtSettings.SigningKey; options.Audience = jwtSettings.Audience; });
 
             // configure jwt authentication
-            //IdentityModelEventSource.ShowPII = true;
-            var jwtSettings = jwtIssuerOptionsSection.Get<JwtIssuerOptions>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -53,6 +55,7 @@ namespace AspNetCoreWeb.Api.Extensions
                        return Task.CompletedTask;
                    }
                };
+
                x.RequireHttpsMetadata = false;
                x.SaveToken = true;
                x.TokenValidationParameters = new TokenValidationParameters

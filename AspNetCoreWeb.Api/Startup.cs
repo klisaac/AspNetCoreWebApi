@@ -1,36 +1,14 @@
-using System.IO;
-using System.Text;
-using System.Net;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using NLog.Web;
-using NLog;
-using NLog.Extensions.Logging;
-using MediatR;
-using AutoMapper;
 using AspNetCoreWebApi.Core.Configuration;
-using AspNetCoreWebApi.Core.Logging;
 using AspNetCoreWebApi.Infrastructure;
 using AspNetCoreWebApi.Infrastructure.Data;
-using AspNetCoreWebApi.Infrastructure.Logging;
 using AspNetCoreWebApi.Application;
 using AspNetCoreWeb.Api.Extensions;
-using AspNetCoreWebApi.Application.Commands;
-using AspNetCoreWebApi.Application.Handlers;
 using AspNetCoreWeb.Api.Middlewares;
 
 namespace AspNetCoreWeb.Api
@@ -119,7 +97,8 @@ namespace AspNetCoreWeb.Api
         {
             if (WebHostEnvironemnt.IsDevelopment() || WebHostEnvironemnt.IsStaging() || WebHostEnvironemnt.IsProduction())
             {
-                services.AddDbContext<AppDataContext>(c => c.UseSqlServer(Configuration.GetConnectionString(Constants.DbConnectionStringKey)).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Transient);
+                services.AddDbContext<AppDataContext>(c => c.UseSqlServer(Configuration[Constants.DbConnectionSecret]).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Transient);
+                //services.AddDbContext<AppDataContext>(c => c.UseSqlServer(Configuration.GetConnectionString(Constants.DbConnectionSecret)).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Transient);
             }
             else 
             {
